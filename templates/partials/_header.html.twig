@@ -12,6 +12,31 @@
 					</a>
 				</li>
 			</ul>
+			<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+				{% if app.user %}
+
+					<li class="nav-item">
+						<a class="nav-link active" href="#">Mon Compte
+						</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link active" href="{{path('app_logout')}}">Me Déconnecter
+						</a>
+					</li>
+				{% else %}
+					<li class="nav-item">
+						<a class="nav-link active" href="{{path('app_login')}}">Me Connecter
+						</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link active" href="{{path('app_register')}}">M'inscrire
+						</a>
+					</li>
+				{% endif %}
+
+
+			</ul>
 		</div>
 	</div>
 </nav>

@@ -33,7 +33,6 @@ class Products
     private ?string $description = null;
 
     #[ORM\Column]
-    #[Assert\LessThan(200)]
     #[Assert\NotNull()]
     #[Assert\Positive()]
     private ?int $price = null;
@@ -53,6 +52,7 @@ class Products
 
     #[ORM\OneToMany(mappedBy: 'products', targetEntity: OrdersDetails::class)]
     private Collection $ordersDetails;
+
 
     public function __construct()
     {

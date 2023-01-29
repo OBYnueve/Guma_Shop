@@ -1,0 +1,50 @@
+{% extends "base.html.twig" %}
+
+{% block title %}
+	Liste des Produits de la catégorie{{category.name}}
+{% endblock %}
+
+{% block body %}
+	<main class="container mt-3 ">
+		<section class="row ">
+			<div class="col-12">
+				<h1>Liste des Produits de la catégorie
+					{{category.name}}</h1>
+			</div>
+			<section class="py-5 bg-light">
+				<div class="container px-4 px-lg-5 mt-5">
+					<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+						{% for product in products %}
+							<div class="col mb-5">
+								<div
+									class="card h-100">
+									<!-- Product image-->
+									{% for image in product.images %}
+										<img class="card-img-top" src="{{asset('assets/uploads/' | imagine_filter('my_thumb')) ~ image.name}}" alt="..."/>
+									{% endfor %}
+									<!-- Product details-->
+									<div class="card-body p-4">
+										<div
+											class="text-center">
+											<!-- Product name-->
+											<h5 class="fw-bolder">{{product.name}}</h5>
+											<!-- Product price-->
+											{{product.price / 100}}€
+										</div>
+									</div>
+									<!-- Product actions-->
+									<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+										<div class="text-center">
+											<a class="btn btn-outline-dark mt-auto" href="{{path('products_details',{'slug':product.slug})}}">Voir le Produit</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+
+					</div>
+				</div>
+			</section>
+		</section>
+	</main>
+{% endblock %}

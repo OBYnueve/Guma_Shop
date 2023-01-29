@@ -3,6 +3,7 @@
 {% block title %}Inscription
 {% endblock %}
 
+
 {% block body %}
 
 	<section class="container ">
@@ -28,7 +29,10 @@
 				{{ form_row(registrationForm.agreeTerms) }}
 
 				<button type="submit" class="btn btn-primary btn-lg my-3">M'inscrire</button>
-				<a href="{{path('app_login')}}" class="btn btn-secondary">Me Connecter</a>
+				<button class="btn btn-primary btn-lg my-3">
+					<a href="{{path('app_login')}}">Me Connecter</a>
+				</button>
+
 				{{ form_end(registrationForm) }}
 			</div>
 		</div>

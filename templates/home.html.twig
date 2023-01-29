@@ -4,13 +4,77 @@
 {% endblock %}
 
 {% block body %}
-	<div class="container mt-4">
-		<div class="jumbotron">
-			<h1 class="display-4">Hello, world!</h1>
-			<p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-			<hr class="my-4">
-			<p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-			<a class="btn btn-primary btn-lg" href="inscription" role="button">Inscription</a>
+
+	<header class="bg-dark py-5">
+		<div class="container px-4 px-lg-5 my-5">
+			<div class="text-center text-white">
+				<h1 class="display-4 fw-bolder">Boutique Guma</h1>
+				<p class="lead fw-normal text-white-50 mb-0">Bienvenue dans la boutique Guma</p>
+			</div>
 		</div>
-	</div>
-{% endblock %}
+	</header>
+
+	<main class="container">
+
+		<section class="row">
+
+			<ul class="nav justify-content-center">
+				{% for category in categories %}
+					{% if category.parent == null %}
+
+
+						<li class="nav-item">
+
+							<h2>{{category.name}}
+								:</h2>
+
+						</li>
+
+
+					{% else %}
+						<li class="nav-item">
+							<a class="nav-link" href="{{path('categories_list', {slug: category.slug} )}}">{{category.name}}</a>
+						</li>
+
+
+					{% endif %}
+				{% endfor %}
+			</ul>
+
+		</section>
+		<section class="py-5">
+			<div class="container px-4 px-lg-5 mt-5">
+				<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+					{% for product in products %}
+
+						<div class="col mb-5">
+							<div
+								class="card h-100">
+								<!-- Product image-->
+								{% for image in product.images %}
+									<img class="card-img-top" src="{{asset('assets/uploads/' | imagine_filter('my_thumb') ) ~ image.name}}" alt="..."/>
+								{% endfor %}
+
+								<!-- Product details-->
+								<div class="card-body p-4">
+									<div
+										class="text-center">
+										<!-- Product name-->
+										<h5 class="fw-bolder">{{product.name}}</h5>
+										<!-- Product price-->
+										{{product.price / 100}}€
+									</div>
+								</div>
+								<!-- Product actions-->
+								<div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+									<div class="text-center">
+										<a class="btn btn-outline-dark mt-auto" href="{{path('products_details',{'slug':product.slug})}}">voir le produit</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</section>
+		</main>
+	{% endblock %}

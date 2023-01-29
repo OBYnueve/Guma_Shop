@@ -7,9 +7,10 @@ use App\Repository\CategoriesRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 
 #[ORM\Entity(repositoryClass: CategoriesRepository::class)]
-class Categories
+class Categories implements Stringable
 {
     use SlugTrait;
 
@@ -21,7 +22,11 @@ class Categories
     #[ORM\Column(length: 100)]
     private ?string $name;
 
+    #[ORM\Column()]
+    private ?int $categoryOrder;
+
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'categories')]
+    #[ORM\JoinColumn(onDelete: 'CASCADE')]
     private ?self $parent;
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
@@ -29,6 +34,11 @@ class Categories
 
     #[ORM\OneToMany(mappedBy: 'categories', targetEntity: Products::class)]
     private Collection $products;
+
+    public function __toString()
+    {
+        return $this->name;
+    }
 
     public function __construct()
     {
@@ -49,6 +59,18 @@ class Categories
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getCategoryOrder(): ?int
+    {
+        return $this->categoryOrder;
+    }
+
+    public function setCategoryOrder(int $categoryOrder): self
+    {
+        $this->categoryOrder = $categoryOrder;
 
         return $this;
     }

@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de
+	{{product.name}}
+{% endblock %}
+
+{% block body %}
+	<section class="py-5">
+		<div class="container px-4 px-lg-5 my-5">
+			<div class="row gx-4 gx-lg-5 align-items-center">
+				{% for image in product.images %}
+					<div class="col-md-6">
+						<img class="card-img-top mb-5 mb-md-0" src="{{asset('assets/uploads/') ~ image.name}}" alt="..."/>
+					</div>
+				{% endfor %}
+				<div class="col-md-6">
+					<div class="small mb-1">Catégories :{{product.categories.name}}</div>
+					<h1 class="display-5 fw-bolder">{{product.name}}</h1>
+					<div class="fs-5 mb-5">
+
+						<span>{{product.price / 100 }}€</span>
+					</div>
+					<p class="lead">{{product.description}}</p>
+					<div class="d-flex">
+						<input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem"/>
+						{% if product.stock > 0 %}
+							<button class="btn btn-outline-dark flex-shrink-0" type="button">
+								<i class="bi-cart-fill me-1"></i>
+
+								<a href="{{path("orders_add", {id: product.id})}}">Ajouter au panier</a>
+							</button>
+						{% else %}
+							<p class="text-danger">Rupture de stock</p>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
